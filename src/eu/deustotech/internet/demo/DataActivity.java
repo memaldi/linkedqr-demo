@@ -9,9 +9,11 @@ import org.xml.sax.SAXException;
 
 import eu.deustotech.internet.linkedtagworld.lib.LinkedTagWorld;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.view.Menu;
 
 public class DataActivity extends Activity {
@@ -22,7 +24,10 @@ public class DataActivity extends Activity {
 		super.onCreate(savedInstanceState);		
         LinkedTagWorld ltw = new LinkedTagWorld(getApplicationContext(), this, getResources().openRawResource(R.raw.lqr));
         try {
-			ltw.renderData(getIntent().getStringExtra("URI"));
+        	SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        	String lang = sharedPrefs.getString("pref_language", "es");        	
+        	
+			ltw.renderData(getIntent().getStringExtra("URI"), lang);
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
